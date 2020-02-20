@@ -8,7 +8,6 @@ com\spring2020\coffeeshop\controller\AppUserController.class
 com\spring2020\coffeeshop\config\ApplicationConfig.class
 com\spring2020\coffeeshop\controller\ProductController.class
 com\spring2020\coffeeshop\domain\entity\Product.class
-com\spring2020\coffeeshop\repository\StatisticRepository.class
 com\spring2020\coffeeshop\domain\entity\OrderDetail.class
 com\spring2020\coffeeshop\service\impl\CategoryServiceImpl.class
 com\spring2020\coffeeshop\domain\dto\AppUserDto.class
@@ -23,13 +22,10 @@ com\spring2020\coffeeshop\repository\ProductRepository.class
 com\spring2020\coffeeshop\service\StaffService.class
 com\spring2020\coffeeshop\domain\dto\OrderAppUserStaffDto.class
 com\spring2020\coffeeshop\domain\dto\StaffDetailDto.class
-com\spring2020\coffeeshop\service\StatisticService.class
 com\spring2020\coffeeshop\domain\enums\OrderStatusEnum.class
 com\spring2020\coffeeshop\domain\dto\ProductImageDto.class
-com\spring2020\coffeeshop\repository\impl\StatisticRepositoryImpl.class
 com\spring2020\coffeeshop\repository\CancelReasonRepository.class
 com\spring2020\coffeeshop\domain\enums\UserTypeEnum.class
-com\spring2020\coffeeshop\controller\StatisticController.class
 com\spring2020\coffeeshop\service\impl\OrderServiceImpl.class
 com\spring2020\coffeeshop\security\UserPrincipal.class
 com\spring2020\coffeeshop\config\WebSecurityConfig.class
@@ -42,8 +38,6 @@ com\spring2020\coffeeshop\domain\dto\OrderDto.class
 com\spring2020\coffeeshop\domain\dto\ProductDto.class
 com\spring2020\coffeeshop\service\CategoryService.class
 com\spring2020\coffeeshop\controller\CancelReasonController.class
-com\spring2020\coffeeshop\domain\dto\ComplexStatisticDto.class
-com\spring2020\coffeeshop\service\impl\StatisticServiceImpl.class
 com\spring2020\coffeeshop\service\OrderService.class
 com\spring2020\coffeeshop\repository\CategoryRepository.class
 com\spring2020\coffeeshop\security\JwtAuthenticationFilter.class
@@ -82,6 +76,5 @@ com\spring2020\coffeeshop\exception\AppExceptionHandler.class
 com\spring2020\coffeeshop\repository\AppRoleRepository.class
 com\spring2020\coffeeshop\domain\dto\AuditDto.class
 com\spring2020\coffeeshop\domain\dto\StaffCreateDto.class
-com\spring2020\coffeeshop\domain\dto\ProductStatisticDto.class
 com\spring2020\coffeeshop\repository\ProductImageRepository.class
 com\spring2020\coffeeshop\service\ProductService.class

@@ -5,19 +5,17 @@ import * as actions from "../../store/actions/index";
 import { connect } from "react-redux";
 import Spinner from "../../components/Spinner/Spinner";
 import DeleteButton from "../../components/Button/DeleteButton";
-import UpdateButton from "../../components/Button/UpdateButton";
+import SwitchMode from "../../components/Button/SwitchMode";
+
 import SweetAlert from "sweetalert-react";
 import { Navbar, FormGroup, FormControl, Alert } from "react-bootstrap";
-import CategoryModal from "../Components/Modal/CategoryModal";
+import StaffModal from "./StaffModal";
+import SwitchControl from "components/Switch";
 
-class Categories extends Component {
+class Staffs extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      confirmDelete: false,
-      deleteId: null,
-      updateFormShow: false,
-      updateData: null,
       searchValue: "",
       successNotice: "",
       successShow: false,
@@ -27,13 +25,10 @@ class Categories extends Component {
     this.handlePageChange = this.handlePageChange.bind(this);
     this.handleSizePerPageChange = this.handleSizePerPageChange.bind(this);
     this.activeFormatter = this.activeFormatter.bind(this);
-    this.handleUpdateCancel = this.handleUpdateCancel.bind(this);
-    this.getInitialValues = this.getInitialValues.bind(this);
-    this.handleAddCancel = this.handleAddCancel.bind(this);
-    this.handleAddSubmit = this.handleAddSubmit.bind(this);
-    this.handleUpdateSubmit = this.handleUpdateSubmit.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
-    this.handleDeleteSubmit = this.handleDeleteSubmit.bind(this);
+    this.handleChangeSwitch = this.handleChangeSwitch.bind(this);
+    this.handleAddSubmit = this.handleAddSubmit.bind(this);
+    this.handleAddCancel = this.handleAddCancel.bind(this);
   }
   componentDidMount() {
     this.fetchData();
@@ -55,68 +50,33 @@ class Categories extends Component {
     // When changing the size per page always navigating to the first page
     this.fetchData(1, sizePerPage, this.state.searchValue);
   }
+
+  handleChangeSwitch = (id, isActive) => {
+    this.setState({
+      successNotice: "Update successfully",
+      successShow: true,
+      errorShow: true
+    });
+    this.props.onUpdateStaff(id, isActive);
+  };
+
   activeFormatter(cell, row) {
     return (
-      <div>
-        <UpdateButton
-          clicked={() =>
-            this.setState({
-              updateFormShow: true,
-              updateData: row
-            })
-          }
-        />
-        <DeleteButton
-          clicked={() =>
-            this.setState({
-              confirmDelete: true,
-              deleteId: row.id
-            })
-          }
+      <div className="col-md-4">
+        <SwitchControl
+          value={row.active}
+          onChange={() => {
+            this.handleChangeSwitch(row.id, !row.active);
+          }}
         />
       </div>
     );
   }
-  handleUpdateCancel = () => {
-    this.setState({
-      updateFormShow: false,
-      updateData: null,
-      cancelUpdate: true
-    });
-  };
-  handleAddCancel = () => {
-    this.setState({
-      addFormShow: false,
-      cancelAdd: true
-    });
-  };
-  getInitialValues = () => {
-    return {
-      name: this.state.updateData ? this.state.updateData.name : "",
-      id: this.state.updateData ? this.state.updateData.id : ""
-    };
-  };
+
   inputChangedHandler = event => {
     this.setState({ searchValue: event.target.value });
   };
-  handleAddSubmit(values) {
-    this.setState({
-      successNotice: "Your category has been added.",
-      successShow: true,
-      addFormShow: false,
-      errorShow: true
-    });
-    this.props.onAddCategory(values);
-  }
-  handleUpdateSubmit(values) {
-    this.setState({
-      successNotice: "Your category has been updated.",
-      successShow: true,
-      updateFormShow: false,
-      errorShow: true
-    });
-    this.props.onUpdateCategory(values);
-  }
+
   handleSearch() {
     this.setState({
       successShow: false,
@@ -124,14 +84,22 @@ class Categories extends Component {
     });
     this.fetchData(1, 20, this.state.searchValue);
   }
-  handleDeleteSubmit() {
+
+  handleAddCancel = () => {
     this.setState({
-      confirmDelete: false,
-      successNotice: "Your category has been deleted.",
+      addFormShow: false,
+      cancelAdd: true
+    });
+  };
+
+  handleAddSubmit(values) {
+    this.setState({
+      successNotice: "Your staff has been added.",
       successShow: true,
+      addFormShow: false,
       errorShow: true
     });
-    this.props.onDeleteCategory(this.state.deleteId);
+    this.props.onAddStaff(values);
   }
 
   render() {
@@ -177,7 +145,7 @@ class Categories extends Component {
               className="btn btn-info btn-fill btn-wd pull-right"
             >
               <span className="btn-label"></span> <i className="fa fa-plus"></i>{" "}
-              Add Category
+              Add Staff
             </button>
           </div>
         </div>
@@ -197,46 +165,54 @@ class Categories extends Component {
             dataField="id"
             isKey
             dataAlign="center"
-            width="15%"
+            width="14%"
           >
             Id
           </TableHeaderColumn>
-          <TableHeaderColumn dataField="name" dataAlign="center" width="50%">
-            Category
+          <TableHeaderColumn
+            dataField="username"
+            dataAlign="center"
+            width="20%"
+          >
+            Username
+          </TableHeaderColumn>
+          <TableHeaderColumn
+            dataField="firstName"
+            dataAlign="center"
+            width="14%"
+          >
+            First name
+          </TableHeaderColumn>
+          <TableHeaderColumn
+            dataField="lastName"
+            dataAlign="center"
+            width="14%"
+          >
+            Last name
+          </TableHeaderColumn>
+          <TableHeaderColumn dataField="gender" dataAlign="center" width="14%">
+            Gender
+          </TableHeaderColumn>
+          <TableHeaderColumn dataField="phone" dataAlign="center" width="14%">
+            Phone
           </TableHeaderColumn>
           <TableHeaderColumn
             dataField="active"
             dataAlign="center"
             dataFormat={this.activeFormatter}
-            width="15%"
+            width="10%"
           >
-            Action
+            Active
           </TableHeaderColumn>
         </BootstrapTable>
-        {/* delete popup */}
-        <SweetAlert
-          title="Are you sure?"
-          show={this.state.confirmDelete}
-          text="You will not be able to recover this category"
-          showCancelButton
-          onConfirm={() => this.handleDeleteSubmit()}
-          onCancel={() => this.setState({ confirmDelete: false })}
-        />
-
-        <CategoryModal
-          show={this.state.updateFormShow}
-          hide={() => this.handleUpdateCancel()}
-          title="Update Category"
-          initialValues={this.getInitialValues()}
-          submitCategory={values => this.handleUpdateSubmit(values)}
-        />
-
-        <CategoryModal
+        <StaffModal
           show={this.state.addFormShow}
           hide={() => this.handleAddCancel()}
-          title="Add Category"
-          submitCategory={values => this.handleAddSubmit(values)}
+          title="Add Staff"
+          submitStaff={values => this.handleAddSubmit(values)}
         />
+
+        {/* delete popup */}
       </div>
     );
     if (this.props.loading) {
@@ -270,11 +246,7 @@ class Categories extends Component {
         </Alert>
       );
     }
-    if (
-      this.props.deleteSuccess ||
-      this.props.updateSuccess ||
-      this.props.addSuccess
-    ) {
+    if (this.props.addSuccess || this.props.updateSuccess) {
       this.fetchData(1, 20, this.state.searchValue);
     }
     return (
@@ -283,7 +255,7 @@ class Categories extends Component {
           <div className="col-md-12">
             <div className="card">
               <div className="header">
-                <h4>Categories</h4>
+                <h4>Staffs</h4>
               </div>
               {errorMsg}
               {successMsg}
@@ -295,28 +267,30 @@ class Categories extends Component {
     );
   }
 }
+
 const mapStateToProps = state => {
   return {
-    loading: state.category.loading,
-    data: state.category.data,
-    error: state.category.error,
-    totalSize: state.category.total,
-    page: state.category.page,
-    sizePerPage: state.category.sizePerPage,
-    deleteSuccess: state.category.deleteSuccess,
-    updateSuccess: state.category.updateSuccess,
-    addSuccess: state.category.addSuccess
+    loading: state.staff.loading,
+    data: state.staff.data,
+    error: state.staff.error,
+    totalSize: state.staff.total,
+    page: state.staff.page,
+    sizePerPage: state.staff.sizePerPage,
+    addSuccess: state.staff.addSuccess,
+    updateSuccess: state.staff.updateSuccess
   };
 };
 
 const mapDispatchToProps = dispatch => {
+  console.log("dispatch");
   return {
     onFetchData: (page, size, search) =>
-      dispatch(actions.getCategories(page, size, search)),
-    onDeleteCategory: id => dispatch(actions.deleteCategory(id)),
-    onUpdateCategory: data => dispatch(actions.updateCategory(data)),
-    onAddCategory: data => dispatch(actions.addCategory(data))
+      dispatch(actions.getStaffs(page, size, search)),
+    onUpdateStaff: (staffId, isActive) =>
+      dispatch(actions.updateStaff(staffId, isActive)),
+    onAddStaff: data => dispatch(actions.addStaff(data))
+
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Categories);
+export default connect(mapStateToProps, mapDispatchToProps)(Staffs);

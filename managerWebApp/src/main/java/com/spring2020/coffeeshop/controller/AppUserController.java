@@ -37,7 +37,6 @@ public class AppUserController {
     public String updateAppUserStatus(@PathVariable(value = "id") long id,
                                       @RequestParam(value = "userType") UserTypeEnum userType,
                                       @RequestParam(value = "isActive") boolean isActive) {
-        System.out.println("isActive");
         appUserService.updateAppUserStatus(userType, id, isActive);
         return UPDATE_SUCCESS;
     }
