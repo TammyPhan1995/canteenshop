@@ -1,5 +1,6 @@
 package com.spring2020.coffeeshop.exception;
 
+import com.spring2020.coffeeshop.domain.dto.ErrorDto;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.dao.DataIntegrityViolationException;

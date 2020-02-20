@@ -3,6 +3,8 @@ staffWebApp/.idea/
 
 managerWebApp/.idea/
 
+managerWebApp/target/
+
 managerWebApp/coffee-shop.iml
 
 staffWebApp/target/test-classes/com/spring2020/staffwebapp/coffee/shop/LinhTinh.class
