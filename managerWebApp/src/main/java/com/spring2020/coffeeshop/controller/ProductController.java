@@ -3,13 +3,9 @@ package com.spring2020.coffeeshop.controller;
 import com.spring2020.coffeeshop.domain.dto.ProductDto;
 import com.spring2020.coffeeshop.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 
@@ -34,25 +30,16 @@ public class ProductController {
         return UPDATE_SUCCESS;
     }
 
-    @PutMapping("/{id}/img")
+    @GetMapping("/{id}/updateImg")
     public String updateProductImage(@PathVariable(value = "id") long id,
-                                     @RequestParam MultipartFile file) {
-        productService.updateProductImage(id, file);
+                                     @RequestParam("urlImg") String urlImg) {
+        productService.updateProductImage(id, urlImg);
         return UPDATE_SUCCESS;
     }
 
-    @GetMapping("/{id}/data")
-    public ProductDto findProductDataById(@PathVariable(value = "id") long id) {
-        return productService.findProductDataById(id);
-    }
-
-    @GetMapping("/{id}/img")
-    public ResponseEntity<Object> findProductImageById(@PathVariable(value = "id") long id) {
-        Resource fileSystemResource = productService.findProductImageById(id);
-        return ResponseEntity.ok()
-                .header("Content-Disposition", "inline; filename=" + id)
-                .contentType(MediaType.IMAGE_JPEG)
-                .body(fileSystemResource);
+    @GetMapping("/{id}")
+    public ProductDto findProductById(@PathVariable(value = "id") long id) {
+        return productService.findProductById(id);
     }
 
     @GetMapping

@@ -19,9 +19,6 @@ public class ConstantUtil {
 
     public static final String DATE_PATTERN = "yyyy-MM-dd";
 
-    //Store image of product
-    public static final String IMAGE_DIRECTORY = "C:\\Users\\ADMIN\\Desktop\\test\\";
-
     public static final String TOKEN_TYPE = "Bearer";
 
 }

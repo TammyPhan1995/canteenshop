@@ -30,6 +30,8 @@ public class ProductDto {
 
     private boolean isAvailable;
 
+    private String urlImg;
+
     @Valid
     @NotNull
     private CategoryDto category;

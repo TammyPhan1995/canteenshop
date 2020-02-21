@@ -40,7 +40,7 @@ public class AuthController {
         String jwt = tokenProvider.generateToken(authentication);
         JwtAuthenticationResponse response = new JwtAuthenticationResponse(jwt,
                 tokenProvider.getUserIdFromJwt(jwt),
-                tokenProvider.getExpiryDateFromJwt(jwt));
+                tokenProvider.getExpiryDateFromJwt(jwt), "MANAGER");
         return ResponseEntity.ok(response);
     }
 

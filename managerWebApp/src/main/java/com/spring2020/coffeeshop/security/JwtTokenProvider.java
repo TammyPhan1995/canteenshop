@@ -50,6 +50,7 @@ public class JwtTokenProvider {
         return claims.getExpiration();
     }
 
+
     public boolean validateToken(String authToken) {
         try {
             Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(authToken);

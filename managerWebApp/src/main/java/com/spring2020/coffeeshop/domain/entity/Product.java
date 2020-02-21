@@ -30,15 +30,14 @@ public class Product extends Audit {
     @Column(nullable = false)
     private boolean isAvailable;
 
+
+    @Column(nullable = false, length = 500)
+    private String urlImg;
+
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
     private Category category;
 
-    @ManyToOne(
-            fetch = FetchType.LAZY,
-            cascade = {CascadeType.MERGE}
-    )
-    @JoinColumn(name = "product_image_id")
-    private ProductImage productImage;
 
 }
