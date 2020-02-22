@@ -25,6 +25,7 @@ public class StatisticRepositoryImpl implements StatisticRepository {
         Query query = entityManager.createNativeQuery(
                 "select count(od.quantity) as quantity, p.name as product_name\n" +
                         "from customer_order co\n" +
+                        "join  order_status os on os.id = co.status_id and os.status = 'Completed' \n" +
                         "join order_detail od on co.id = od.order_id\n" +
                         "join product p  on p.id = od.product_id\n" +
                         "where co.create_at  between ? and ? + interval 1 day\n" +
@@ -38,9 +39,11 @@ public class StatisticRepositoryImpl implements StatisticRepository {
     @SuppressWarnings("unchecked")
     public Double findRevenue(LocalDate startDate, LocalDate endDate) {
         Query query = entityManager.createNativeQuery(
-                "select sum(total_price) as revenue\n" +
+                "\n" +
+                        "select sum(co.total_price) as revenue\n" +
                         "from customer_order co\n" +
-                        "where  co.create_at  between ? and ? + interval 1 day");
+                        "join order_status os on os.id = co.status_id and os.status = 'Completed' \n" +
+                        "where  co.create_at  between ? and ? + interval 1 day\n");
         query.setParameter(1, startDate);
         query.setParameter(2, endDate);
         List<Object> result = (List<Object>) query.getResultList();

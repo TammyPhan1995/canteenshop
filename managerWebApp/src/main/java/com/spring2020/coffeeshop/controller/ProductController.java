@@ -1,6 +1,7 @@
 package com.spring2020.coffeeshop.controller;
 
 import com.spring2020.coffeeshop.domain.dto.ProductDto;
+import com.spring2020.coffeeshop.domain.dto.ProductImageDto;
 import com.spring2020.coffeeshop.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -30,10 +31,10 @@ public class ProductController {
         return UPDATE_SUCCESS;
     }
 
-    @GetMapping("/{id}/updateImg")
+    @PutMapping("/{id}/updateImg")
     public String updateProductImage(@PathVariable(value = "id") long id,
-                                     @RequestParam("urlImg") String urlImg) {
-        productService.updateProductImage(id, urlImg);
+                                     @RequestBody ProductImageDto productImageDto) {
+        productService.updateProductImage(id, productImageDto.getImgUrl());
         return UPDATE_SUCCESS;
     }
 

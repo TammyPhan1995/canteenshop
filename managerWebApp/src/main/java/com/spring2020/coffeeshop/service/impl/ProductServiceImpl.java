@@ -13,6 +13,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import static com.spring2020.coffeeshop.util.ConstantUtil.DEFAULT_IMG;
+
 @Service
 public class ProductServiceImpl implements ProductService {
 
@@ -22,7 +24,6 @@ public class ProductServiceImpl implements ProductService {
     @Autowired
     private ObjectMapper mapper;
 
-    private static final String DEFAULT_IMG = "default.jpg";
 
     @Override
     public ProductDto createProduct(ProductDto productDto) {

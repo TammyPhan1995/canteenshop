@@ -21,4 +21,6 @@ public class ConstantUtil {
 
     public static final String TOKEN_TYPE = "Bearer";
 
+    public static final String DEFAULT_IMG = "https://firebasestorage.googleapis.com/v0/b/cshop-86866.appspot.com/o/images%2FDefault_Image.png?alt=media&token=0cb51e7b-20f1-4990-88c1-3dbe25927250";
+
 }
