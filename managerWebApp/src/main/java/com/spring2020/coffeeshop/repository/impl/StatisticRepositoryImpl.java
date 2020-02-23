@@ -23,7 +23,7 @@ public class StatisticRepositoryImpl implements StatisticRepository {
     @SuppressWarnings("unchecked")
     public List<Object[]> findSoldProductQuantity(LocalDate startDate, LocalDate endDate) {
         Query query = entityManager.createNativeQuery(
-                "select count(od.quantity) as quantity, p.name as product_name\n" +
+                "select sum(od.quantity) as quantity, p.name as product_name\n" +
                         "from customer_order co\n" +
                         "join  order_status os on os.id = co.status_id and os.status = 'Completed' \n" +
                         "join order_detail od on co.id = od.order_id\n" +
